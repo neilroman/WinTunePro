@@ -1,14 +1,81 @@
+# Build output
 bin/
 obj/
+publish/
+out/
+
+# Visual Studio
 .vs/
 *.user
 *.suo
 *.userprefs
+*.userosscache
+*.sln.docstates
+*.aps
+.vscode/launch.json
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# NuGet
 packages/
-TestResults/
 *.nupkg
-publish/
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Test results & coverage
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+*.trx
+
+# Windows App SDK / MSIX packaging
 AppPackages/
 BundleArtifacts/
+*.msix
+*.msixbundle
+*.msixupload
+*.appxsym
+Package.StoreAssociation.xml
+_pkginfo.txt
+
+# MSBuild logs
+msbuild.log
+msbuild.binlog
+*.binlog
+
+# Runtime data (WinTune Pro)
+*.db
+*.db-shm
+*.db-wal
+
+# Secrets & credentials
 .env
+.env.*
 *.secret
+*.pfx
+*.p12
+*.snk
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
