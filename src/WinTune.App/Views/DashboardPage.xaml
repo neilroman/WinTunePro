@@ -1,6 +1,7 @@
 <Page x:Class="WinTune.App.Views.DashboardPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ai="using:WinTune.Ai">
 
     <ScrollViewer Padding="32">
         <StackPanel Spacing="24">
@@ -70,6 +71,39 @@
                     </StackPanel>
                 </Border>
             </Grid>
+
+            <!-- Recomendaciones IA -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="12" Padding="24">
+                <StackPanel Spacing="16">
+                    <TextBlock Text="Recomendaciones IA" Style="{StaticResource TitleTextBlockStyle}"/>
+                    <ListView ItemsSource="{x:Bind ViewModel.Recommendations, Mode=OneWay}"
+                              SelectionMode="None" IsItemClickEnabled="False">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="ai:ScanRecommendation">
+                                <Grid Padding="0,8" ColumnSpacing="12" ColumnDefinitions="80,*">
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="4">
+                                        <ProgressBar Value="{x:Bind Score}" Maximum="1" Minimum="0"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="{x:Bind DisplayName}" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{x:Bind Reason}"
+                                                   Style="{StaticResource CaptionTextBlockStyle}"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                   TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </Border>
 
         </StackPanel>
     </ScrollViewer>

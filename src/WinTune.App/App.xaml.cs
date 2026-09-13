@@ -1,9 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
+using WinTune.Ai;
 using WinTune.App.Services;
 using WinTune.App.ViewModels;
 using WinTune.Core.Orchestrator;
 using WinTune.Core.PluginHost;
+using WinTune.Data;
 using WinTune.Sdk;
 
 namespace WinTune.App;
@@ -45,6 +47,14 @@ public partial class App : Application
         svc.AddSingleton(pluginHost);
 
         svc.AddSingleton<ModuleOrchestrator>();
+
+        // Data + AI
+        var journalPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "WinTune Pro", "journal.db");
+        Directory.CreateDirectory(Path.GetDirectoryName(journalPath)!);
+        svc.AddSingleton(new ChangeJournal(journalPath));
+        svc.AddSingleton<UsagePatternAnalyzer>();
 
         // App services
         svc.AddSingleton<BrokerClient>();

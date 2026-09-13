@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using WinTune.Ai;
 using WinTune.App.Services;
 using WinTune.Core.Orchestrator;
 using WinTune.Sdk;
@@ -10,17 +11,21 @@ public sealed partial class DashboardViewModel : ObservableObject
 {
     private readonly ModuleOrchestrator _orchestrator;
     private readonly BrokerClient _broker;
+    private readonly UsagePatternAnalyzer _analyzer;
 
     [ObservableProperty] private bool _isScanning;
     [ObservableProperty] private int _healthScore = 100;
     [ObservableProperty] private string _statusMessage = "Listo";
     [ObservableProperty] private long _totalBytesSaved;
     [ObservableProperty] private int _totalFindings;
+    [ObservableProperty] private IReadOnlyList<ScanRecommendation> _recommendations = [];
 
-    public DashboardViewModel(ModuleOrchestrator orchestrator, BrokerClient broker)
+    public DashboardViewModel(ModuleOrchestrator orchestrator, BrokerClient broker, UsagePatternAnalyzer analyzer)
     {
         _orchestrator = orchestrator;
         _broker = broker;
+        _analyzer = analyzer;
+        RefreshRecommendations();
     }
 
     [RelayCommand(IncludeCancelCommand = true)]
@@ -41,6 +46,7 @@ public sealed partial class DashboardViewModel : ObservableObject
             TotalBytesSaved = result.TotalBytesSaved;
             HealthScore = ComputeHealthScore(result);
             StatusMessage = $"Análisis completo — {TotalFindings} problemas encontrados";
+            RefreshRecommendations();
         }
         catch (OperationCanceledException)
         {
@@ -50,6 +56,18 @@ public sealed partial class DashboardViewModel : ObservableObject
         {
             IsScanning = false;
         }
+    }
+
+    private void RefreshRecommendations()
+    {
+        var modules = _orchestrator.Modules;
+        var moduleIds = modules.Select(m => m.Metadata.Id).ToList();
+        var displayNames = modules.ToDictionary(m => m.Metadata.Id, m => m.Metadata.DisplayName);
+
+        var raw = _analyzer.GetRecommendations(moduleIds);
+        Recommendations = raw
+            .Select(r => r with { DisplayName = displayNames.GetValueOrDefault(r.ModuleId, r.ModuleId) })
+            .ToList();
     }
 
     private static int ComputeHealthScore(OrchestratorScanResult result)
