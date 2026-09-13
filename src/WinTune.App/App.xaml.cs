@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using WinTune.App.Services;
 using WinTune.App.ViewModels;
@@ -26,14 +25,25 @@ public partial class App : Application
     private static ServiceProvider BuildServices()
     {
         var svc = new ServiceCollection();
+        svc.AddLogging();
 
-        // Plugin host — loads first-party plugins
+        // First-party plugins — registered directly so DI injects ILogger<T>
+        svc.AddSingleton<IOptimizerModule, WinTune.Plugins.Cleanup.CleanupModule>();
+        svc.AddSingleton<IOptimizerModule, WinTune.Plugins.Performance.PerformanceModule>();
+        svc.AddSingleton<IOptimizerModule, WinTune.Plugins.Privacy.PrivacyModule>();
+        svc.AddSingleton<IOptimizerModule, WinTune.Plugins.Gaming.GamingModule>();
+        svc.AddSingleton<IOptimizerModule, WinTune.Plugins.Storage.StorageModule>();
+        svc.AddSingleton<IOptimizerModule, WinTune.Plugins.Network.NetworkModule>();
+        svc.AddSingleton<IOptimizerModule, WinTune.Plugins.Devtools.DevtoolsModule>();
+
+        // Third-party plugins loaded from a dedicated subdirectory (empty by default)
+        var externalPluginDir = Path.Combine(AppContext.BaseDirectory, "plugins");
         var pluginHost = new AssemblyPluginHost(
             Microsoft.Extensions.Logging.Abstractions.NullLogger<AssemblyPluginHost>.Instance);
-        var modules = pluginHost.LoadFromDirectory(AppContext.BaseDirectory);
-
+        foreach (var m in pluginHost.LoadFromDirectory(externalPluginDir))
+            svc.AddSingleton(m);
         svc.AddSingleton(pluginHost);
-        svc.AddSingleton<IEnumerable<IOptimizerModule>>(modules);
+
         svc.AddSingleton<ModuleOrchestrator>();
 
         // App services
@@ -46,7 +56,6 @@ public partial class App : Application
         svc.AddTransient<PerformanceViewModel>();
         svc.AddTransient<PrivacyViewModel>();
 
-        svc.AddLogging();
         return svc.BuildServiceProvider();
     }
 }

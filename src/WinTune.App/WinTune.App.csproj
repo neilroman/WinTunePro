@@ -19,6 +19,13 @@
     <ProjectReference Include="..\WinTune.Core\WinTune.Core.csproj" />
     <ProjectReference Include="..\WinTune.Broker.Contracts\WinTune.Broker.Contracts.csproj" />
     <ProjectReference Include="..\WinTune.Ai\WinTune.Ai.csproj" />
+    <ProjectReference Include="..\plugins\WinTune.Plugins.Cleanup\WinTune.Plugins.Cleanup.csproj" />
+    <ProjectReference Include="..\plugins\WinTune.Plugins.Performance\WinTune.Plugins.Performance.csproj" />
+    <ProjectReference Include="..\plugins\WinTune.Plugins.Privacy\WinTune.Plugins.Privacy.csproj" />
+    <ProjectReference Include="..\plugins\WinTune.Plugins.Gaming\WinTune.Plugins.Gaming.csproj" />
+    <ProjectReference Include="..\plugins\WinTune.Plugins.Storage\WinTune.Plugins.Storage.csproj" />
+    <ProjectReference Include="..\plugins\WinTune.Plugins.Network\WinTune.Plugins.Network.csproj" />
+    <ProjectReference Include="..\plugins\WinTune.Plugins.Devtools\WinTune.Plugins.Devtools.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.4.0" />
