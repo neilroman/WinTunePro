@@ -29,6 +29,10 @@ public sealed partial class MainWindow : Window
             "cleanup"     => typeof(CleanupPage),
             "performance" => typeof(PerformancePage),
             "privacy"     => typeof(PrivacyPage),
+            "gaming"      => typeof(GamingPage),
+            "storage"     => typeof(StoragePage),
+            "network"     => typeof(NetworkPage),
+            "devtools"    => typeof(DevtoolsPage),
             _             => typeof(DashboardPage),
         };
         ContentFrame.Navigate(page);

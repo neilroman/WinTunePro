@@ -55,6 +55,10 @@ public partial class App : Application
         svc.AddTransient<CleanupViewModel>();
         svc.AddTransient<PerformanceViewModel>();
         svc.AddTransient<PrivacyViewModel>();
+        svc.AddTransient<GamingViewModel>();
+        svc.AddTransient<StorageViewModel>();
+        svc.AddTransient<NetworkViewModel>();
+        svc.AddTransient<DevtoolsViewModel>();
 
         return svc.BuildServiceProvider();
     }
