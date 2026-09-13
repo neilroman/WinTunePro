@@ -5,6 +5,7 @@ using WinTune.App.Services;
 using WinTune.Core.Orchestrator;
 using WinTune.Monitor;
 using WinTune.Sdk;
+using AppNotificationService = WinTune.App.Services.NotificationService;
 
 namespace WinTune.App.ViewModels;
 
@@ -14,6 +15,7 @@ public sealed partial class DashboardViewModel : ObservableObject
     private readonly BrokerClient _broker;
     private readonly UsagePatternAnalyzer _analyzer;
     private readonly MetricRingBuffer _metrics;
+    private readonly AppNotificationService _notifications;
 
     [ObservableProperty] private bool _isScanning;
     [ObservableProperty] private int _healthScore = 100;
@@ -25,12 +27,14 @@ public sealed partial class DashboardViewModel : ObservableObject
     [ObservableProperty] private float _ramPercent;
 
     public DashboardViewModel(ModuleOrchestrator orchestrator, BrokerClient broker,
-                              UsagePatternAnalyzer analyzer, MetricRingBuffer metrics)
+                              UsagePatternAnalyzer analyzer, MetricRingBuffer metrics,
+                              AppNotificationService notifications)
     {
         _orchestrator = orchestrator;
         _broker = broker;
         _analyzer = analyzer;
         _metrics = metrics;
+        _notifications = notifications;
         RefreshRecommendations();
         StartMetricPolling();
     }
@@ -73,6 +77,11 @@ public sealed partial class DashboardViewModel : ObservableObject
             HealthScore = ComputeHealthScore(result);
             StatusMessage = $"Análisis completo — {TotalFindings} problemas encontrados";
             RefreshRecommendations();
+
+            var allFindings = result.Results.SelectMany(r => r.Findings).ToList();
+            int critical = allFindings.Count(f => f.Severity == FindingSeverity.Critical);
+            int high     = allFindings.Count(f => f.Severity == FindingSeverity.High);
+            _notifications.NotifyFindings(critical, high, TotalFindings);
         }
         catch (OperationCanceledException)
         {

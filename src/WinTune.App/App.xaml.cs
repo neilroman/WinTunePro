@@ -17,7 +17,13 @@ public partial class App : Application
     public static IServiceProvider Services { get; private set; } = null!;
     public static MainWindow MainWindow { get; private set; } = null!;
 
-    public App() => InitializeComponent();
+    public App()
+    {
+        InitializeComponent();
+        Resources["BoolToVisibilityConverter"]          = new BoolToVisibilityConverter();
+        Resources["NegatedBoolConverter"]               = new NegatedBoolConverter();
+        Resources["NegatedBoolToVisibilityConverter"]   = new NegatedBoolToVisibilityConverter();
+    }
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
@@ -26,6 +32,9 @@ public partial class App : Application
         // Start background monitor worker (no IHost — manual start)
         _ = Services.GetRequiredService<EtwMonitorWorker>()
                     .StartAsync(CancellationToken.None);
+
+        // Register toast notifications (non-fatal for unpackaged app without shortcut)
+        Services.GetRequiredService<NotificationService>().Register();
 
         // Launch broker process with elevation (non-fatal if UAC is cancelled)
         try { Services.GetRequiredService<BrokerLauncher>().EnsureRunning(); }
@@ -74,9 +83,16 @@ public partial class App : Application
         svc.AddSingleton<MetricRingBuffer>();
         svc.AddSingleton<EtwMonitorWorker>();
 
+        // Settings
+        var settingsPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "WinTune Pro", "settings.json");
+        svc.AddSingleton(new SettingsService(settingsPath));
+
         // App services
         svc.AddSingleton<BrokerClient>();
         svc.AddSingleton<BrokerLauncher>();
+        svc.AddSingleton<NotificationService>();
         svc.AddSingleton<NavigationService>();
 
         // ViewModels
@@ -91,6 +107,8 @@ public partial class App : Application
         svc.AddTransient<PowerViewModel>();
         svc.AddTransient<MonitoringViewModel>();
         svc.AddTransient<BackupViewModel>();
+        svc.AddTransient<SettingsViewModel>();
+        svc.AddTransient<HistoryViewModel>();
 
         return svc.BuildServiceProvider();
     }

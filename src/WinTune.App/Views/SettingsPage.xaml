@@ -7,12 +7,54 @@
 
             <TextBlock Text="Configuración" Style="{StaticResource TitleLargeTextBlockStyle}"/>
 
-            <!-- About section -->
+            <!-- Apariencia -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Apariencia" FontWeight="SemiBold"/>
+                    <ComboBox Header="Tema" MinWidth="200"
+                              SelectedIndex="{x:Bind ViewModel.SelectedTheme, Mode=TwoWay}">
+                        <ComboBoxItem Content="Sistema (predeterminado)"/>
+                        <ComboBoxItem Content="Claro"/>
+                        <ComboBoxItem Content="Oscuro"/>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
+
+            <!-- Notificaciones -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Notificaciones" FontWeight="SemiBold"/>
+                    <ToggleSwitch Header="Alertas de problemas críticos"
+                                  IsOn="{x:Bind ViewModel.NotificationsEnabled, Mode=TwoWay}"/>
+                    <ToggleSwitch Header="Escaneo automático periódico"
+                                  IsOn="{x:Bind ViewModel.AutoScanEnabled, Mode=TwoWay}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Seguridad -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Seguridad" FontWeight="SemiBold"/>
+                    <TextBlock Text="Se crea un punto de restauración antes de aplicar cambios."
+                               Style="{StaticResource BodyTextBlockStyle}"
+                               TextWrapping="Wrap"/>
+                    <Button Content="Crear punto de restauración ahora"
+                            Command="{x:Bind ViewModel.CreateRestorePointCommand}"/>
+                    <TextBlock Text="{x:Bind ViewModel.Status, Mode=OneWay}"
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Acerca de -->
             <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     CornerRadius="8" Padding="20">
                 <StackPanel Spacing="8">
                     <TextBlock Text="WinTune Pro" FontSize="18" FontWeight="SemiBold"/>
-                    <TextBlock Text="Versión 1.0.0 — Alpha"
+                    <TextBlock Text="Versión 0.3.0 — Sprint 3A"
                                Style="{StaticResource CaptionTextBlockStyle}"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                     <TextBlock Text="Licencia: GPL-3.0 — Sin telemetría, sin publicidad"
@@ -21,31 +63,11 @@
                 </StackPanel>
             </Border>
 
-            <!-- Restore point -->
-            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    CornerRadius="8" Padding="20">
-                <StackPanel Spacing="12">
-                    <TextBlock Text="Seguridad" FontWeight="SemiBold"/>
-                    <TextBlock Text="Siempre se crea un punto de restauración antes de aplicar cambios."
-                               Style="{StaticResource BodyTextBlockStyle}"
-                               TextWrapping="Wrap"/>
-                    <Button Content="Crear punto de restauración ahora"
-                            x:Name="CreateRestorePointButton"/>
-                </StackPanel>
-            </Border>
-
-            <!-- Theme -->
-            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    CornerRadius="8" Padding="20">
-                <StackPanel Spacing="12">
-                    <TextBlock Text="Apariencia" FontWeight="SemiBold"/>
-                    <ComboBox Header="Tema" x:Name="ThemeComboBox" MinWidth="200">
-                        <ComboBoxItem Content="Sistema (predeterminado)" IsSelected="True"/>
-                        <ComboBoxItem Content="Claro"/>
-                        <ComboBoxItem Content="Oscuro"/>
-                    </ComboBox>
-                </StackPanel>
-            </Border>
+            <!-- Guardar -->
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <Button Content="Guardar configuración" Style="{StaticResource AccentButtonStyle}"
+                        Command="{x:Bind ViewModel.SaveCommand}"/>
+            </StackPanel>
 
         </StackPanel>
     </ScrollViewer>

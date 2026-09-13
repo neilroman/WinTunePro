@@ -36,6 +36,7 @@ public sealed partial class MainWindow : Window
             "power"       => typeof(PowerPage),
             "monitor"     => typeof(MonitoringPage),
             "backup"      => typeof(BackupPage),
+            "history"     => typeof(HistoryPage),
             _             => typeof(DashboardPage),
         };
         ContentFrame.Navigate(page);

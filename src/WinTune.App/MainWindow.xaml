@@ -24,6 +24,7 @@
                 <NavigationViewItem Tag="devtools"    Icon="Code"   Content="Dev Tools"/>
                 <NavigationViewItem Tag="backup"      Icon="Save"   Content="Copia de Seguridad"/>
                 <NavigationViewItem Tag="monitor"     Icon="Activity" Content="Monitoreo"/>
+                <NavigationViewItem Tag="history"     Icon="Clock"  Content="Historial"/>
             </NavigationView.MenuItems>
 
             <Frame x:Name="ContentFrame" Margin="0"/>
