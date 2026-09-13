@@ -1,0 +1,72 @@
+<Page x:Class="WinTune.App.Views.MarketplacePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="using:WinTune.App.ViewModels"
+      Loaded="Page_Loaded">
+
+    <ScrollViewer Padding="32">
+        <StackPanel Spacing="24" MaxWidth="800">
+
+            <TextBlock Text="Marketplace de Plugins"
+                       Style="{StaticResource TitleLargeTextBlockStyle}"/>
+
+            <!-- Controles -->
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <Button Content="Recargar catálogo" Style="{StaticResource AccentButtonStyle}"
+                        Command="{x:Bind ViewModel.LoadCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsLoading,
+                            Converter={StaticResource NegatedBoolConverter}, Mode=OneWay}"/>
+                <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+                              Width="24" Height="24"/>
+            </StackPanel>
+
+            <!-- Status -->
+            <TextBlock Text="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                       Style="{StaticResource CaptionTextBlockStyle}"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+
+            <!-- Plugin list -->
+            <ListView ItemsSource="{x:Bind ViewModel.Plugins, Mode=OneWay}"
+                      SelectionMode="None">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0,4"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:MarketplacePluginItem">
+                        <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                CornerRadius="8" Padding="16" Margin="0,4">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel Spacing="4">
+                                    <TextBlock Text="{x:Bind Entry.Name}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{x:Bind Entry.Description}"
+                                               Style="{StaticResource CaptionTextBlockStyle}"
+                                               TextWrapping="Wrap"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                                    <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                        <Run Text="v"/><Run Text="{x:Bind Entry.Version}"/>
+                                        <Run Text=" — "/><Run Text="{x:Bind Entry.Author}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                                    <Button Content="Instalar"
+                                            Command="{x:Bind InstallCommand}"
+                                            IsEnabled="{x:Bind InstallState,
+                                                Mode=OneWay,
+                                                Converter={StaticResource NegatedBoolConverter}}"/>
+                                    <TextBlock Text="{x:Bind InstallState, Mode=OneWay}"
+                                               Style="{StaticResource CaptionTextBlockStyle}"
+                                               HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

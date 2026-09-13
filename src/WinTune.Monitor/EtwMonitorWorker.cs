@@ -12,15 +12,19 @@ namespace WinTune.Monitor;
 public sealed class EtwMonitorWorker : BackgroundService
 {
     private readonly MetricRingBuffer _buffer;
+    private readonly MetricHistoryBuffer _history;
     private readonly ILogger<EtwMonitorWorker> _log;
 
     private PerformanceCounter? _cpuCounter;
     private PerformanceCounter? _ramAvailableCounter;
+    private int _tickCount;
 
-    public EtwMonitorWorker(MetricRingBuffer buffer, ILogger<EtwMonitorWorker> log)
+    public EtwMonitorWorker(MetricRingBuffer buffer, MetricHistoryBuffer history,
+                            ILogger<EtwMonitorWorker> log)
     {
-        _buffer = buffer;
-        _log = log;
+        _buffer  = buffer;
+        _history = history;
+        _log     = log;
     }
 
     public override Task StartAsync(CancellationToken ct)
@@ -48,6 +52,15 @@ public sealed class EtwMonitorWorker : BackgroundService
             {
                 var sample = CollectSample();
                 _buffer.Write(sample);
+
+                // Downsample to 1/min for trend history
+                if (++_tickCount >= 60)
+                {
+                    _tickCount = 0;
+                    float ram = sample.RamTotalMb > 0
+                        ? sample.RamUsedMb / sample.RamTotalMb * 100f : 0f;
+                    _history.Add(sample.CpuPercent, ram);
+                }
             }
             catch (Exception ex)
             {

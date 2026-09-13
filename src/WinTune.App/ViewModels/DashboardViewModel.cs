@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WinTune.Ai;
@@ -16,6 +17,8 @@ public sealed partial class DashboardViewModel : ObservableObject
     private readonly UsagePatternAnalyzer _analyzer;
     private readonly MetricRingBuffer _metrics;
     private readonly AppNotificationService _notifications;
+    private readonly HtmlReportService _htmlReport;
+    private OrchestratorScanResult? _lastResult;
 
     [ObservableProperty] private bool _isScanning;
     [ObservableProperty] private int _healthScore = 100;
@@ -28,16 +31,21 @@ public sealed partial class DashboardViewModel : ObservableObject
 
     public DashboardViewModel(ModuleOrchestrator orchestrator, BrokerClient broker,
                               UsagePatternAnalyzer analyzer, MetricRingBuffer metrics,
-                              AppNotificationService notifications)
+                              AppNotificationService notifications, HtmlReportService htmlReport)
     {
         _orchestrator = orchestrator;
-        _broker = broker;
-        _analyzer = analyzer;
-        _metrics = metrics;
-        _notifications = notifications;
+        _broker       = broker;
+        _analyzer     = analyzer;
+        _metrics      = metrics;
+        _notifications= notifications;
+        _htmlReport   = htmlReport;
         RefreshRecommendations();
         StartMetricPolling();
     }
+
+    private bool CanExport => _lastResult != null && !IsScanning;
+
+    partial void OnIsScanningChanged(bool _) => ExportReportCommand.NotifyCanExecuteChanged();
 
     private void StartMetricPolling()
     {
@@ -82,6 +90,9 @@ public sealed partial class DashboardViewModel : ObservableObject
             int critical = allFindings.Count(f => f.Severity == FindingSeverity.Critical);
             int high     = allFindings.Count(f => f.Severity == FindingSeverity.High);
             _notifications.NotifyFindings(critical, high, TotalFindings);
+
+            _lastResult = result;
+            ExportReportCommand.NotifyCanExecuteChanged();
         }
         catch (OperationCanceledException)
         {
@@ -103,6 +114,32 @@ public sealed partial class DashboardViewModel : ObservableObject
         Recommendations = raw
             .Select(r => r with { DisplayName = displayNames.GetValueOrDefault(r.ModuleId, r.ModuleId) })
             .ToList();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanExport))]
+    private async Task ExportReportAsync()
+    {
+        if (_lastResult is null) return;
+        var rows = _lastResult.Results
+            .SelectMany(r => r.Findings.Select(f => new FindingRow(
+                r.ModuleId,
+                f.Severity.ToString(),
+                f.Title,
+                f.Description ?? string.Empty)))
+            .ToList();
+
+        var html = _htmlReport.BuildReport(
+            DateTime.Now.ToString("yyyy-MM-dd HH:mm"),
+            rows,
+            HealthScore);
+
+        var path = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+            $"WinTunePro-{DateTime.Now:yyyyMMdd-HHmmss}.html");
+
+        await File.WriteAllTextAsync(path, html);
+        Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+        StatusMessage = $"Reporte exportado → {Path.GetFileName(path)}";
     }
 
     private static int ComputeHealthScore(OrchestratorScanResult result)

@@ -38,6 +38,8 @@
                 <Button Content="Cancelar"
                         Command="{x:Bind ViewModel.ScanAllCancelCommand}"
                         Visibility="{x:Bind ViewModel.IsScanning, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"/>
+                <Button Content="Exportar reporte"
+                        Command="{x:Bind ViewModel.ExportReportCommand}"/>
                 <ProgressRing IsActive="{x:Bind ViewModel.IsScanning, Mode=OneWay}" Width="24" Height="24"/>
             </StackPanel>
 

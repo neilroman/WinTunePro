@@ -1,0 +1,64 @@
+<Page x:Class="WinTune.App.Views.TrendsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:sp="using:ScottPlot.WinUI"
+      Loaded="Page_Loaded">
+
+    <ScrollViewer Padding="32">
+        <StackPanel Spacing="24" MaxWidth="900">
+
+            <TextBlock Text="Tendencias" Style="{StaticResource TitleLargeTextBlockStyle}"/>
+
+            <!-- Selector de rango -->
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <RadioButton Content="24 horas"
+                             IsChecked="{x:Bind ViewModel.Is24Hours, Mode=TwoWay}"/>
+                <RadioButton Content="7 días"
+                             IsChecked="{x:Bind ViewModel.Is24Hours,
+                                 Converter={StaticResource NegatedBoolConverter}, Mode=TwoWay}"/>
+                <Button Content="Actualizar" Command="{x:Bind ViewModel.RefreshCommand}"/>
+            </StackPanel>
+
+            <!-- Sin datos -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="32"
+                    Visibility="{x:Bind ViewModel.HasData,
+                        Converter={StaticResource NegatedBoolToVisibilityConverter}, Mode=OneWay}">
+                <StackPanel HorizontalAlignment="Center" Spacing="8">
+                    <FontIcon Glyph="&#xE81C;" FontSize="40"
+                              Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                    <TextBlock Text="Sin datos todavía"
+                               HorizontalAlignment="Center"
+                               Style="{StaticResource BodyTextBlockStyle}"/>
+                    <TextBlock Text="El monitor de métricas llena el historial con el tiempo (1 muestra/minuto)."
+                               TextWrapping="Wrap" HorizontalAlignment="Center"
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- CPU Chart -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="16"
+                    Visibility="{x:Bind ViewModel.HasData,
+                        Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="CPU (%)" FontWeight="SemiBold"/>
+                    <sp:WinUIPlot x:Name="CpuPlot" Height="200"/>
+                </StackPanel>
+            </Border>
+
+            <!-- RAM Chart -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="16"
+                    Visibility="{x:Bind ViewModel.HasData,
+                        Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="RAM (%)" FontWeight="SemiBold"/>
+                    <sp:WinUIPlot x:Name="RamPlot" Height="200"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

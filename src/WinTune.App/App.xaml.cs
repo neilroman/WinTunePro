@@ -9,6 +9,7 @@ using WinTune.Core.PluginHost;
 using WinTune.Data;
 using WinTune.Monitor;
 using WinTune.Sdk;
+using Microsoft.Extensions.Http;
 
 namespace WinTune.App;
 
@@ -81,6 +82,7 @@ public partial class App : Application
 
         // Monitor
         svc.AddSingleton<MetricRingBuffer>();
+        svc.AddSingleton<MetricHistoryBuffer>();
         svc.AddSingleton<EtwMonitorWorker>();
 
         // Settings
@@ -90,10 +92,13 @@ public partial class App : Application
         svc.AddSingleton(new SettingsService(settingsPath));
 
         // App services
+        svc.AddHttpClient();
         svc.AddSingleton<BrokerClient>();
         svc.AddSingleton<BrokerLauncher>();
         svc.AddSingleton<NotificationService>();
         svc.AddSingleton<NavigationService>();
+        svc.AddSingleton<HtmlReportService>();
+        svc.AddSingleton<MarketplaceService>();
 
         // ViewModels
         svc.AddTransient<DashboardViewModel>();
@@ -109,6 +114,8 @@ public partial class App : Application
         svc.AddTransient<BackupViewModel>();
         svc.AddTransient<SettingsViewModel>();
         svc.AddTransient<HistoryViewModel>();
+        svc.AddTransient<TrendsViewModel>();
+        svc.AddTransient<MarketplaceViewModel>();
 
         return svc.BuildServiceProvider();
     }
