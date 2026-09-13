@@ -33,6 +33,9 @@ public sealed partial class MainWindow : Window
             "storage"     => typeof(StoragePage),
             "network"     => typeof(NetworkPage),
             "devtools"    => typeof(DevtoolsPage),
+            "power"       => typeof(PowerPage),
+            "monitor"     => typeof(MonitoringPage),
+            "backup"      => typeof(BackupPage),
             _             => typeof(DashboardPage),
         };
         ContentFrame.Navigate(page);

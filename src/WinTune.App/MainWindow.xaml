@@ -22,6 +22,7 @@
                 <NavigationViewItem Tag="network"     Icon="World"  Content="Red"/>
                 <NavigationViewItem Tag="gaming"      Icon="XboxController" Content="Gaming"/>
                 <NavigationViewItem Tag="devtools"    Icon="Code"   Content="Dev Tools"/>
+                <NavigationViewItem Tag="backup"      Icon="Save"   Content="Copia de Seguridad"/>
                 <NavigationViewItem Tag="monitor"     Icon="Activity" Content="Monitoreo"/>
             </NavigationView.MenuItems>
 

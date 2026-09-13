@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using WinTune.Ai;
 using WinTune.App.Services;
 using WinTune.Core.Orchestrator;
+using WinTune.Monitor;
 using WinTune.Sdk;
 
 namespace WinTune.App.ViewModels;
@@ -12,6 +13,7 @@ public sealed partial class DashboardViewModel : ObservableObject
     private readonly ModuleOrchestrator _orchestrator;
     private readonly BrokerClient _broker;
     private readonly UsagePatternAnalyzer _analyzer;
+    private readonly MetricRingBuffer _metrics;
 
     [ObservableProperty] private bool _isScanning;
     [ObservableProperty] private int _healthScore = 100;
@@ -19,13 +21,37 @@ public sealed partial class DashboardViewModel : ObservableObject
     [ObservableProperty] private long _totalBytesSaved;
     [ObservableProperty] private int _totalFindings;
     [ObservableProperty] private IReadOnlyList<ScanRecommendation> _recommendations = [];
+    [ObservableProperty] private float _cpuPercent;
+    [ObservableProperty] private float _ramPercent;
 
-    public DashboardViewModel(ModuleOrchestrator orchestrator, BrokerClient broker, UsagePatternAnalyzer analyzer)
+    public DashboardViewModel(ModuleOrchestrator orchestrator, BrokerClient broker,
+                              UsagePatternAnalyzer analyzer, MetricRingBuffer metrics)
     {
         _orchestrator = orchestrator;
         _broker = broker;
         _analyzer = analyzer;
+        _metrics = metrics;
         RefreshRecommendations();
+        StartMetricPolling();
+    }
+
+    private void StartMetricPolling()
+    {
+        _ = Task.Run(async () =>
+        {
+            while (true)
+            {
+                await Task.Delay(1000);
+                var s = _metrics.Latest;
+                float cpu = s.CpuPercent;
+                float ram = s.RamTotalMb > 0 ? s.RamUsedMb / s.RamTotalMb * 100f : 0f;
+                App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                {
+                    CpuPercent = cpu;
+                    RamPercent = ram;
+                });
+            }
+        });
     }
 
     [RelayCommand(IncludeCancelCommand = true)]

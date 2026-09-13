@@ -72,6 +72,32 @@
                 </Border>
             </Grid>
 
+            <!-- Métricas en vivo -->
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="8" Padding="16" Margin="0,0,8,0">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="CPU" Style="{StaticResource CaptionTextBlockStyle}"/>
+                        <ProgressBar Value="{x:Bind ViewModel.CpuPercent, Mode=OneWay}" Maximum="100"/>
+                        <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                                   Text="{x:Bind ViewModel.CpuPercent, Mode=OneWay}"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="8" Padding="16" Margin="8,0,0,0">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="RAM" Style="{StaticResource CaptionTextBlockStyle}"/>
+                        <ProgressBar Value="{x:Bind ViewModel.RamPercent, Mode=OneWay}" Maximum="100"/>
+                        <TextBlock Style="{StaticResource CaptionTextBlockStyle}"
+                                   Text="{x:Bind ViewModel.RamPercent, Mode=OneWay}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
             <!-- Recomendaciones IA -->
             <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     CornerRadius="12" Padding="24">
