@@ -1,0 +1,12 @@
+PowerGetActiveScheme
+PowerSetActiveScheme
+PowerReadFriendlyName
+GetSystemPowerStatus
+SetThreadExecutionState
+GetPhysicallyInstalledSystemMemory
+GlobalMemoryStatusEx
+GetDiskFreeSpaceEx
+CreateToolhelp32Snapshot
+Process32First
+Process32Next
+CloseHandle

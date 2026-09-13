@@ -1,0 +1,52 @@
+<Page x:Class="WinTune.App.Views.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ScrollViewer Padding="32">
+        <StackPanel Spacing="24" MaxWidth="600">
+
+            <TextBlock Text="Configuración" Style="{StaticResource TitleLargeTextBlockStyle}"/>
+
+            <!-- About section -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="20">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="WinTune Pro" FontSize="18" FontWeight="SemiBold"/>
+                    <TextBlock Text="Versión 1.0.0 — Alpha"
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                    <TextBlock Text="Licencia: GPL-3.0 — Sin telemetría, sin publicidad"
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Restore point -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Seguridad" FontWeight="SemiBold"/>
+                    <TextBlock Text="Siempre se crea un punto de restauración antes de aplicar cambios."
+                               Style="{StaticResource BodyTextBlockStyle}"
+                               TextWrapping="Wrap"/>
+                    <Button Content="Crear punto de restauración ahora"
+                            x:Name="CreateRestorePointButton"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Theme -->
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="8" Padding="20">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Apariencia" FontWeight="SemiBold"/>
+                    <ComboBox Header="Tema" x:Name="ThemeComboBox" MinWidth="200">
+                        <ComboBoxItem Content="Sistema (predeterminado)" IsSelected="True"/>
+                        <ComboBoxItem Content="Claro"/>
+                        <ComboBoxItem Content="Oscuro"/>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

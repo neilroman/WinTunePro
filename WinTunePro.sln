@@ -1,0 +1,95 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.0.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.App", "src\WinTune.App\WinTune.App.csproj", "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Sdk", "src\WinTune.Sdk\WinTune.Sdk.csproj", "{B2C3D4E5-F6A7-8901-BCDE-F12345678901}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Core", "src\WinTune.Core\WinTune.Core.csproj", "{C3D4E5F6-A7B8-9012-CDEF-123456789012}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Broker", "src\WinTune.Broker\WinTune.Broker.csproj", "{D4E5F6A7-B8C9-0123-DEF0-234567890123}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Broker.Contracts", "src\WinTune.Broker.Contracts\WinTune.Broker.Contracts.csproj", "{E5F6A7B8-C9D0-1234-EF01-345678901234}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Monitor", "src\WinTune.Monitor\WinTune.Monitor.csproj", "{F6A7B8C9-D0E1-2345-F012-456789012345}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Data", "src\WinTune.Data\WinTune.Data.csproj", "{A7B8C9D0-E1F2-3456-0123-567890123456}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Interop", "src\WinTune.Interop\WinTune.Interop.csproj", "{B8C9D0E1-F2A3-4567-1234-678901234567}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Ai", "src\WinTune.Ai\WinTune.Ai.csproj", "{C9D0E1F2-A3B4-5678-2345-789012345678}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Plugins.Cleanup", "src\plugins\WinTune.Plugins.Cleanup\WinTune.Plugins.Cleanup.csproj", "{D0E1F2A3-B4C5-6789-3456-890123456789}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Plugins.Performance", "src\plugins\WinTune.Plugins.Performance\WinTune.Plugins.Performance.csproj", "{E1F2A3B4-C5D6-7890-4567-901234567890}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Plugins.Privacy", "src\plugins\WinTune.Plugins.Privacy\WinTune.Plugins.Privacy.csproj", "{F2A3B4C5-D6E7-8901-5678-012345678901}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Plugins.Gaming", "src\plugins\WinTune.Plugins.Gaming\WinTune.Plugins.Gaming.csproj", "{A3B4C5D6-E7F8-9012-6789-123456789012}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Plugins.Storage", "src\plugins\WinTune.Plugins.Storage\WinTune.Plugins.Storage.csproj", "{B4C5D6E7-F8A9-0123-7890-234567890123}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Plugins.Network", "src\plugins\WinTune.Plugins.Network\WinTune.Plugins.Network.csproj", "{C5D6E7F8-A9B0-1234-8901-345678901234}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Plugins.Devtools", "src\plugins\WinTune.Plugins.Devtools\WinTune.Plugins.Devtools.csproj", "{D6E7F8A9-B0C1-2345-9012-456789012345}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Core.Tests", "tests\WinTune.Core.Tests\WinTune.Core.Tests.csproj", "{E7F8A9B0-C1D2-3456-0123-567890123456}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Broker.Tests", "tests\WinTune.Broker.Tests\WinTune.Broker.Tests.csproj", "{F8A9B0C1-D2E3-4567-1234-678901234567}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinTune.Plugins.Cleanup.Tests", "tests\WinTune.Plugins.Cleanup.Tests\WinTune.Plugins.Cleanup.Tests.csproj", "{A9B0C1D2-E3F4-5678-2345-789012345678}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|x64.ActiveCfg = Debug|x64
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|x64.Build.0 = Debug|x64
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|x64.ActiveCfg = Release|x64
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|x64.Build.0 = Release|x64
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Debug|x64.ActiveCfg = Debug|x64
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Debug|x64.Build.0 = Debug|x64
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Release|x64.ActiveCfg = Release|x64
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Release|x64.Build.0 = Release|x64
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Debug|x64.ActiveCfg = Debug|x64
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Debug|x64.Build.0 = Debug|x64
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Release|x64.ActiveCfg = Release|x64
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Release|x64.Build.0 = Release|x64
+		{D4E5F6A7-B8C9-0123-DEF0-234567890123}.Debug|x64.ActiveCfg = Debug|x64
+		{D4E5F6A7-B8C9-0123-DEF0-234567890123}.Debug|x64.Build.0 = Debug|x64
+		{D4E5F6A7-B8C9-0123-DEF0-234567890123}.Release|x64.ActiveCfg = Release|x64
+		{D4E5F6A7-B8C9-0123-DEF0-234567890123}.Release|x64.Build.0 = Release|x64
+		{E5F6A7B8-C9D0-1234-EF01-345678901234}.Debug|x64.ActiveCfg = Debug|x64
+		{E5F6A7B8-C9D0-1234-EF01-345678901234}.Debug|x64.Build.0 = Debug|x64
+		{E5F6A7B8-C9D0-1234-EF01-345678901234}.Release|x64.ActiveCfg = Release|x64
+		{E5F6A7B8-C9D0-1234-EF01-345678901234}.Release|x64.Build.0 = Release|x64
+		{F6A7B8C9-D0E1-2345-F012-456789012345}.Debug|x64.ActiveCfg = Debug|x64
+		{F6A7B8C9-D0E1-2345-F012-456789012345}.Debug|x64.Build.0 = Debug|x64
+		{F6A7B8C9-D0E1-2345-F012-456789012345}.Release|x64.ActiveCfg = Release|x64
+		{F6A7B8C9-D0E1-2345-F012-456789012345}.Release|x64.Build.0 = Release|x64
+		{A7B8C9D0-E1F2-3456-0123-567890123456}.Debug|x64.ActiveCfg = Debug|x64
+		{A7B8C9D0-E1F2-3456-0123-567890123456}.Debug|x64.Build.0 = Debug|x64
+		{A7B8C9D0-E1F2-3456-0123-567890123456}.Release|x64.ActiveCfg = Release|x64
+		{A7B8C9D0-E1F2-3456-0123-567890123456}.Release|x64.Build.0 = Release|x64
+		{B8C9D0E1-F2A3-4567-1234-678901234567}.Debug|x64.ActiveCfg = Debug|x64
+		{B8C9D0E1-F2A3-4567-1234-678901234567}.Debug|x64.Build.0 = Debug|x64
+		{B8C9D0E1-F2A3-4567-1234-678901234567}.Release|x64.ActiveCfg = Release|x64
+		{B8C9D0E1-F2A3-4567-1234-678901234567}.Release|x64.Build.0 = Release|x64
+		{C9D0E1F2-A3B4-5678-2345-789012345678}.Debug|x64.ActiveCfg = Debug|x64
+		{C9D0E1F2-A3B4-5678-2345-789012345678}.Debug|x64.Build.0 = Debug|x64
+		{C9D0E1F2-A3B4-5678-2345-789012345678}.Release|x64.ActiveCfg = Release|x64
+		{C9D0E1F2-A3B4-5678-2345-789012345678}.Release|x64.Build.0 = Release|x64
+		{D0E1F2A3-B4C5-6789-3456-890123456789}.Debug|x64.ActiveCfg = Debug|x64
+		{D0E1F2A3-B4C5-6789-3456-890123456789}.Debug|x64.Build.0 = Debug|x64
+		{D0E1F2A3-B4C5-6789-3456-890123456789}.Release|x64.ActiveCfg = Release|x64
+		{D0E1F2A3-B4C5-6789-3456-890123456789}.Release|x64.Build.0 = Release|x64
+		{E1F2A3B4-C5D6-7890-4567-901234567890}.Debug|x64.ActiveCfg = Debug|x64
+		{E1F2A3B4-C5D6-7890-4567-901234567890}.Debug|x64.Build.0 = Debug|x64
+		{E1F2A3B4-C5D6-7890-4567-901234567890}.Release|x64.ActiveCfg = Release|x64
+		{E1F2A3B4-C5D6-7890-4567-901234567890}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+EndGlobal

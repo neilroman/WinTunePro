@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+    <RootNamespace>WinTune.Plugins.Gaming</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>13</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WinTune.Sdk\WinTune.Sdk.csproj" />
+    <ProjectReference Include="..\..\WinTune.Interop\WinTune.Interop.csproj" />
+  </ItemGroup>
+</Project>

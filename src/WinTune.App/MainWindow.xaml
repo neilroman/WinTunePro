@@ -1,0 +1,31 @@
+<Window
+    x:Class="WinTune.App.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    Title="WinTune Pro">
+
+    <Grid>
+        <NavigationView x:Name="NavView"
+                        IsBackButtonVisible="Collapsed"
+                        IsSettingsVisible="true"
+                        PaneDisplayMode="Left"
+                        SelectionChanged="NavView_SelectionChanged">
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Tag="dashboard" Icon="Home" Content="Dashboard"/>
+                <NavigationViewItem Tag="cleanup"     Icon="Sweep"  Content="Limpieza"/>
+                <NavigationViewItem Tag="performance" Icon="Speed"  Content="Rendimiento"/>
+                <NavigationViewItem Tag="storage"     Icon="HardDrive" Content="Almacenamiento"/>
+                <NavigationViewItem Tag="power"       Icon="Battery" Content="Energía"/>
+                <NavigationViewItem Tag="privacy"     Icon="ProtectedDocument" Content="Privacidad"/>
+                <NavigationViewItem Tag="network"     Icon="World"  Content="Red"/>
+                <NavigationViewItem Tag="gaming"      Icon="XboxController" Content="Gaming"/>
+                <NavigationViewItem Tag="devtools"    Icon="Code"   Content="Dev Tools"/>
+                <NavigationViewItem Tag="monitor"     Icon="Activity" Content="Monitoreo"/>
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="ContentFrame" Margin="0"/>
+        </NavigationView>
+    </Grid>
+</Window>

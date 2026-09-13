@@ -1,0 +1,14 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userprefs
+packages/
+TestResults/
+*.nupkg
+publish/
+AppPackages/
+BundleArtifacts/
+.env
+*.secret
